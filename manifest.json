@@ -1,0 +1,31 @@
+{
+  "manifest_version": 1,
+  "name": "zalo-star-message",
+  "version": 1,
+  "versionString": "0.1.0",
+  "description": "A plain text description",
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/con128.png"
+  },
+  "script": {
+    "content_script": "src/contents/index.ts",
+    "background_script": "src/background/index.ts"
+  },
+  "requirements": {
+    "zalo_version": 299,
+    "plugins": {
+      "other-plugin": 1
+    },
+    "permissions": ["read-message", "zoom-to-message"],
+    "optional_permissions": []
+  },
+  "webview": [
+    {
+      "name": "welcome-page",
+      "url": "https://example.com"
+    }
+  ],
+  "assets": ["./assets/*"]
+}

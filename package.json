@@ -1,0 +1,8 @@
+{
+  "name": "@zalo/star-message",
+  "version": "0.1.0",
+  "scripts": {
+    "start:content-script": "zpc-cli run start:content-script --preset @zalo/cli-preset-extension",
+    "start:background-script": "zpc-cli run start:background-script --preset @zalo/cli-preset-extension"
+  }
+}
