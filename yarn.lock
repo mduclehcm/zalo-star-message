@@ -2,3 +2,7 @@
 # yarn lockfile v1
 
 
+solid-js@^0.20.1:
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/solid-js/-/solid-js-0.20.1.tgz#bed870db5a24828dd1ed7b916bc3c7514633ce23"
+  integrity sha512-qjOiDXslPi9pTPrqQrwYMh0WNBrv6aMRdl1h09MgeXYUryw6zeO1Rse4qnybyBqKmyUT1KPMMwzKV/dSvbgnHA==

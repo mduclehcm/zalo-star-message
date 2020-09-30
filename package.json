@@ -4,5 +4,8 @@
   "scripts": {
     "start:content-script": "zpc-cli run start:content-script --preset @zalo/cli-preset-extension",
     "start:background-script": "zpc-cli run start:background-script --preset @zalo/cli-preset-extension"
+  },
+  "dependencies": {
+    "solid-js": "^0.20.1"
   }
 }

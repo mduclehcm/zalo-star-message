@@ -1,34 +1,24 @@
-import { useContext, Match, Switch, For, UI } from "@zalo/extension-sdk";
+import { getContext, z } from "@zalo/extension-sdk";
+import { For, Switch, Match } from "solid-js";
+import { IMessageStore } from "../../common/messages-store";
+import { MessageGroup } from "./message-group";
 
-function MessageItem() {}
+export function SideBar() {
+  const ctx = getContext();
+  const [state] = ctx.store.get<IMessageStore>("star-message");
 
-function MessageGroup() {
-  return (
-    <div>
-      {store.va}
-      <ul>
-        <For items={group.msgs}>{(msg) => <li>{msg.content}</li>}</For>
-      </ul>
-    </div>
-  );
-}
-
-export function SideBar(props) {
-  const ctx = useContext();
-  const store = ctx.store.getStore("star-message");
-
-  ctx.commands.run({
-    command: "load-message",
+  ctx.action.dispatch({
+    type: "load-message",
   });
 
   return (
     <Switch>
-      <Match value={store.loading}>
-        <UI.Typo>Loading</UI.Typo>
+      <Match when={state.loading}>
+        <z.Typo>Loading</z.Typo>
       </Match>
-      <Match value={!store.loading}>
-        <For items={store.messageGroups}>
-          {(group) => <MessageGroup msgs={group.msgs} />}
+      <Match when={!state.loading}>
+        <For each={state.groups}>
+          {(group) => <MessageGroup date={group.date} msgs={group.msgs} />}
         </For>
       </Match>
     </Switch>

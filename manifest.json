@@ -18,7 +18,7 @@
     "plugins": {
       "other-plugin": 1
     },
-    "permissions": ["read-message", "zoom-to-message"],
+    "permissions": ["read-message"],
     "optional_permissions": []
   },
   "webview": [

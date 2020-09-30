@@ -1,14 +1,13 @@
-import { useContext } from "@zalo/extension-sdk";
+import { IMessage, getContext } from "@zalo/extension-sdk";
 
-export function MessageItem(props) {
-  const ctx = useContext();
-
+export function MessageItem(props: { msg: IMessage }) {
   function handleClick() {
-    ctx.commands.run({
+    const ctx = getContext();
+    ctx.action.dispatch({
       target: "app",
-      commands: "zoom-to-message",
+      type: "zoom-to-message",
     });
   }
 
-  return <li onclick={handleClick}>{props.msg.content}</li>;
+  return <li onClick={handleClick}>{props.msg.content}</li>;
 }

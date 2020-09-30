@@ -1,37 +1,36 @@
-import { Store, SystemTime, IMessage } from "@zalo/extension-sdk";
+import { State, SetStateFunction, createState } from "solid-js";
+import { SystemTime, IMessage } from "@zalo/extension-sdk";
+import { IMessageStore } from "../common/messages-store";
 
-export const store = Store.create({
-  initial: {
-    loading: true,
-    obj: {
-      v: 0,
-    },
-    errorMessage: "",
-    messageGroups: [],
-  },
-  method: {
-    async loadStarMessage(
-      limit: number,
-      lastTime: number = SystemTime.getTimeNow()
-    ) {
-      // TODO: load from indexdb
-      this.setState("messageGroups", []);
-    },
-    async addStarMessages(msg: IMessage[], time) {
-      this.setState("messageGroups", (messageGroups) => {
-        // TODO: add msgs
-        return messageGroups;
-      });
-    },
-    async unstaredMessages(msgs: IMessage[]) {
-      this.setState("messageGroups", (messageGroups) => {
-        // TODO: remove msgs
-        return messageGroups;
-      });
-    },
-    async checkStarMessage(msgId: IMessage[]) {
-      // TODO: check
-      return false;
-    },
-  },
-});
+export class MessageStore {
+  state: State<IMessageStore>;
+  setState: SetStateFunction<IMessageStore>;
+
+  constructor() {
+    const [state, setState] = createState<IMessageStore>({
+      loading: true,
+      errorMessage: "",
+      groups: [],
+    });
+    this.state = state;
+    this.setState = setState;
+  }
+
+  async loadStarMessage(
+    limit: number,
+    lastTime: number = SystemTime.getTimeNow()
+  ) {
+    this.setState({ loading: true });
+    // fetch from db
+    // await db.fetch();
+    this.setState({
+      loading: false,
+      groups: [],
+    });
+  }
+  async addStarMessages(msg: IMessage, time: number) {}
+  async unstaredMessages(msgId: number) {}
+  async checkStarMessage(msgId: number) {
+    return false;
+  }
+}

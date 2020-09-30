@@ -3,20 +3,23 @@ import {
   WorkerContext,
   IMessage,
 } from "@zalo/extension-sdk";
-import { store as messagesStore } from "./star-message-store";
+import { MessageStore } from "./star-message-store";
 
-activateBackground((ctx: WorkerContext) => {
-  ctx.store.sync(messagesStore);
-  ctx.commands.on("load-message", () => {
-    messagesStore.loadStarMessage();
+activateBackground(async (ctx: WorkerContext) => {
+  const msgStore = new MessageStore();
+  ctx.store.register("star-message-store", msgStore.state);
+
+  ctx.action.on("load-message", async (limit: number, lastTime: number) => {
+    msgStore.loadStarMessage(limit, lastTime);
   });
-  ctx.commands.on("star-message", (msgs: IMessage[]) => {
-    messagesStore.addStarMessages(msgs);
+
+  ctx.action.on("star-message", async (msg: IMessage, time: number) => {
+    msgStore.addStarMessages(msg, time);
   });
-  ctx.commands.on("unstar-message", (msgIds: string[]) => {
-    return messagesStore.unstaredMessages(msgIds);
+  ctx.action.on("unstar-message", (id: number) => {
+    msgStore.unstaredMessages(id);
   });
-  ctx.commands.on("check-message", (msgIds: string[]) => {
-    return messagesStore.checkStarMessage(msgIds);
+  ctx.action.on("check-message", (id: number) => {
+    return msgStore.checkStarMessage(id);
   });
 });
